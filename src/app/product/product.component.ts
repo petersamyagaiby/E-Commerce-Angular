@@ -14,10 +14,6 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
 export class ProductComponent {
   @Input() product: any;
 
-  get newString() {
-    return this.product.description.slice(0, 50) + '...';
-  }
-
   constructor(private router: Router) {}
 
   handleRedirect(id: number) {

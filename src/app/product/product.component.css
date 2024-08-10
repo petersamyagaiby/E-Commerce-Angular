@@ -1,5 +1,6 @@
 img {
   aspect-ratio: 1 / 1;
+  object-fit: contain;
   background-color: rgb(240, 240, 240);
   position: relative;
 }
@@ -13,4 +14,17 @@ i {
   top: 20px;
   left: 20px;
   z-index: 1;
+}
+
+.desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.card:hover {
+  scale: 1.1;
+  transition: 0.5s;
 }

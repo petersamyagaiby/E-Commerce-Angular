@@ -1,10 +1,23 @@
 <div class="row row-cols-2">
   <div class="col">
-    <img src="{{ productDetails.images[0] }}" class="card-img-top" alt="..." />
-    @if (productDetails.images.length > 1) { @for (img of productDetails.images;
-    track $index) {
-    <img class="card-img-top otherImg" src="{{ img }}" alt="..." />
-    } }
+    <img
+      src="{{ productDetails.images[0] }}"
+      class="card-img-top mb-2"
+      id="current-img"
+      alt="{{ productDetails.title }}"
+    />
+    @if (productDetails.images.length > 1) {
+    <div class="d-flex justify-content-center">
+      @for (img of productDetails.images; track $index) {
+      <img
+        class="card-img-top otherImg"
+        src="{{ img }}"
+        alt="{{ productDetails.title }}"
+        (click)="changeImg(productDetails.images, $index)"
+      />
+      }
+    </div>
+    }
   </div>
   <div class="col mt-5">
     <h1 class="card-title mb-3">{{ productDetails.title }}</h1>
@@ -53,7 +66,21 @@
         <p>Don't miss it</p>
       </div>
     </div>
-    <button type="button" class="btn btn-success me-3">Buy Now</button>
-    <button type="button" class="btn btn-outline-success">Add to cart</button>
+    <button
+      type="button"
+      class="btn btn-success me-3"
+      [disabled]="productDetails.stock === 0"
+    >
+      Buy Now
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-success"
+      [disabled]="productDetails.stock === 0"
+    >
+      Add to cart
+    </button>
+    <!-- <button type="button" class="btn btn-success me-3">Buy Now</button>
+    <button type="button" class="btn btn-outline-success">Add to cart</button> -->
   </div>
 </div>

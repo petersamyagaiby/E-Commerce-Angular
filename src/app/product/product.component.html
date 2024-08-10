@@ -25,7 +25,7 @@
     <p>
       <app-star-rating [rating]="product.rating"></app-star-rating>
     </p>
-    <p class="card-text card-desc">{{ newString }}</p>
+    <p class="card-text desc">{{ product.description }}</p>
     <button class="btn btn-primary" (click)="handleRedirect(product.id)">
       View
     </button>

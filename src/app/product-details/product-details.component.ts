@@ -26,6 +26,14 @@ export class ProductDetailsComponent {
       (product) => product.id === +id
     );
   }
+
+  changeImg(images: string[], index: number) {
+    this.productDetails.images = images;
+    const currentImg = document.getElementById('current-img');
+    if (currentImg) {
+      currentImg.setAttribute('src', images[index]);
+    }
+  }
 }
 
 interface Review {
