@@ -1,0 +1,14 @@
+img {
+  height: 500px;
+}
+
+i {
+  color: green;
+}
+
+.otherImg {
+  padding: 5px;
+  background-color: rgb(240, 240, 240);
+  width: 100px;
+  height: 100px;
+}

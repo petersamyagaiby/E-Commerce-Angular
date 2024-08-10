@@ -1,0 +1,59 @@
+<div class="row row-cols-2">
+  <div class="col">
+    <img src="{{ productDetails.images[0] }}" class="card-img-top" alt="..." />
+    @if (productDetails.images.length > 1) { @for (img of productDetails.images;
+    track $index) {
+    <img class="card-img-top otherImg" src="{{ img }}" alt="..." />
+    } }
+  </div>
+  <div class="col mt-5">
+    <h1 class="card-title mb-3">{{ productDetails.title }}</h1>
+    <p class="card-text">{{ productDetails.description }}</p>
+    <p>
+      <app-star-rating [rating]="productDetails.rating"></app-star-rating>
+    </p>
+    <p>Total Reviews: ({{ productDetails.reviews.length }})</p>
+    <hr />
+    <h3>
+      @if (productDetails.discountPercentage) {
+      <strong class="card-title text-danger me-2">
+        $
+        {{
+          (
+            [productDetails.price, productDetails.discountPercentage]
+            | calculateDiscount
+          ).toFixed(2)
+        }}
+      </strong>
+      <del>$ {{ productDetails.price }}</del>
+      } @else {
+      <strong class="card-title">$ {{ productDetails.price }}</strong>
+      }
+    </h3>
+    <p>
+      @if (productDetails.stock > 0) {
+      <label class="badge bg-success">In Stock</label>
+      } @else {
+      <label class="badge bg-danger">Out of Stock</label>
+      }
+    </p>
+    <h3>More information</h3>
+    <div class="row row-cols-2 g-5">
+      <p class="col fs-3">
+        <button class="btn text-success fs-1">-</button>
+        1
+        <button class="btn text-success fs-1">+</button>
+      </p>
+      <div class="col">
+        <p>
+          only
+          <span class="text-danger">{{ productDetails.stock }} items</span>
+          left!
+        </p>
+        <p>Don't miss it</p>
+      </div>
+    </div>
+    <button type="button" class="btn btn-success me-3">Buy Now</button>
+    <button type="button" class="btn btn-outline-success">Add to cart</button>
+  </div>
+</div>

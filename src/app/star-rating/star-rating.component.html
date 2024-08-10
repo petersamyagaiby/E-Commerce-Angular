@@ -1,0 +1,6 @@
+<div class="star-rating">
+  <i class="fa-solid fa-star" *ngFor="let star of stars"></i>
+  <i class="fa-regular fa-star-half-stroke" *ngIf="rating % 1 !== 0"></i>
+  <i class="fa-regular fa-star" *ngFor="let star of emptyStars"></i>
+  {{ rating }}
+</div>
