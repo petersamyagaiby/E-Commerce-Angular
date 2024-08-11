@@ -1,1 +1,39 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="formEmail" class="form-label">Email address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="formEmail"
+      formControlName="email"
+    />
+    @if (email?.invalid && email?.touched) {
+    <div class="form-text text-danger">
+      @if (email?.hasError('required')){
+      <span>Required</span>
+      } @if (email?.hasError('pattern')) {
+      <span>Please Enter Valid Email Address</span>
+      }
+    </div>
+    }
+  </div>
+  <div class="mb-3">
+    <label for="formPassword" class="form-label">Password</label>
+    <input
+      type="text"
+      class="form-control"
+      id="formPassword"
+      formControlName="password"
+    />
+  </div>
+  @if (password?.invalid && password?.touched) {
+  <div class="form-text text-danger">
+    @if (password?.hasError('required')) {
+    <span>Required</span>
+    } @if (password?.hasError('minlength')) {
+    <span>Password must be at least 6 characters</span>
+    }
+  </div>
+  }
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

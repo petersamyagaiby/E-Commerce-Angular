@@ -1,1 +1,103 @@
-<p>register works!</p>
+<form [formGroup]="registerForm">
+  <div class="mb-3">
+    <label for="formName" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="formName"
+      aria-describedby="emailHelp"
+      formControlName="name"
+    />
+    @if (name?.invalid && name?.touched) {
+    <div class="form-text text-danger">
+      @if (name?.hasError('required')){
+      <span>Required</span>
+      } @if (name?.hasError('minlength')) {
+      <span>Name must be at least 6 characters</span>
+      }
+    </div>
+    }
+  </div>
+  <div class="mb-3">
+    <label for="formEmail" class="form-label">Email address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="formEmail"
+      formControlName="email"
+    />
+    @if (email?.invalid && email?.touched) {
+    <div class="form-text text-danger">
+      @if (email?.hasError('required')){
+      <span>Required</span>
+      } @if (email?.hasError('pattern')) {
+      <span>Please Enter Valid Email Address</span>
+      }
+    </div>
+    }
+  </div>
+  <div class="mb-3">
+    <label for="formUsername" class="form-label">Username</label>
+    <input
+      type="text"
+      class="form-control"
+      id="formUsername"
+      aria-describedby="emailHelp"
+      formControlName="username"
+    />
+    @if (username?.invalid && username?.touched) {
+    <div class="form-text text-danger">
+      @if (username?.hasError('required')){
+      <span>Required</span>
+      } @else if (username?.hasError('minlength')) {
+      <span>Username must be at least 6 characters</span>
+      } @else if (username?.hasError('pattern')) {
+      <span>No Space Allowed</span>
+      }
+    </div>
+    }
+  </div>
+  <div class="mb-3">
+    <label for="formPassword" class="form-label">Password</label>
+    <input
+      type="text"
+      class="form-control"
+      id="formPassword"
+      formControlName="password"
+    />
+    @if (password?.invalid && password?.touched) {
+    <div class="form-text text-danger">
+      @if (password?.hasError('required')){
+      <span>Required</span>
+      } @else if (password?.hasError('minlength')) {
+      <span>Password must be at least 8 characters</span>
+      } @else if (password?.hasError('pattern')) {
+      <span>Please Enter Strong Password</span>
+      }
+    </div>
+    }
+  </div>
+  <div class="mb-3">
+    <label for="formConfirmPassword" class="form-label">Confirm Password</label>
+    <input
+      type="text"
+      class="form-control"
+      id="formConfirmPassword"
+      formControlName="confirmPassword"
+    />
+    @if (confirmPassword?.touched) {
+    <div class="form-text text-danger">
+      @if (registerForm.errors?.['passwordMismatchError']){
+      <span>Passwords does not match</span>
+      }
+    </div>
+    }
+  </div>
+  <button
+    type="submit"
+    class="btn btn-success"
+    [disabled]="registerForm.invalid"
+  >
+    Register
+  </button>
+</form>
