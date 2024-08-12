@@ -1,26 +1,31 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-// import productsData from '../../../public/products.json';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FloorPipe } from '../floor.pipe';
 import { CalculateDiscountPipe } from '../calculate-discount.pipe';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
 import { ProductsRequestService } from '../services/products-request.service';
+import { Product } from '../interface/product.interface';
+import { cartItem } from '../interface/cartItem.interface';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [FloorPipe, CalculateDiscountPipe, StarRatingComponent],
+  imports: [FloorPipe, CalculateDiscountPipe, StarRatingComponent, RouterLink],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent {
+  productDetails: any;
+  counter: number = 1;
+  cartItems!: cartItem[];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private productRequestService: ProductsRequestService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
-
-  productDetails: any;
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
@@ -42,46 +47,29 @@ export class ProductDetailsComponent {
       currentImg.setAttribute('src', images[index]);
     }
   }
-}
 
-interface Review {
-  rating: number;
-  comment: string;
-  date: string;
-  reviewerName: string;
-  reviewerEmail: string;
-}
+  counterDecrement() {
+    if (this.counter > 1) {
+      this.counter--;
+    }
+  }
 
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  tags: string[];
-  brand?: string;
-  sku: string;
-  weight: number;
-  dimensions: {
-    width: number;
-    height: number;
-    depth: number;
-  };
-  warrantyInformation: string;
-  shippingInformation: string;
-  availabilityStatus: string;
-  reviews: Review[];
-  returnPolicy: string;
-  minimumOrderQuantity: number;
-  meta: {
-    createdAt: string;
-    updatedAt: string;
-    barcode: string;
-    qrCode: string;
-  };
-  images: string[];
-  thumbnail: string;
+  counterIncrement() {
+    if (this.counter < this.productDetails.stock) {
+      this.counter++;
+    }
+  }
+
+  addToCart(item: Product, quantity: number) {
+    console.log(item);
+    this.cartService.addToCart({ product: item, quantity });
+    console.log('cart service total items: ', this.cartService.getTotalItems());
+  }
+
+  buyNow(item: Product, quantity: number) {
+    console.log(item);
+    this.cartService.addToCart({ product: item, quantity });
+    console.log(this.cartService.getTotalItems());
+    this.router.navigate(['/cart']);
+  }
 }

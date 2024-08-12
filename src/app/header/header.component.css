@@ -1,4 +1,15 @@
 .active-link {
-  color: brown;
+  color: rgb(18, 92, 153);
   font-weight: bold;
+}
+
+.pos {
+  position: relative;
+}
+
+.myCircle {
+  position: absolute;
+  top: -5px;
+  right: -15px;
+  font-size: 8px;
 }

@@ -1,1 +1,87 @@
-<p>cart works!</p>
+@if (cartItems.length === 0) {
+<div class="row justify-content-center">
+  <div class="col-auto">
+    <div class="card p-4">
+      <div class="card-body text-center">
+        <h2 class="card-title mb-3">Your cart is empty</h2>
+        <p class="card-text">
+          Looks like you haven't added anything to your cart yet.
+        </p>
+        <p>Start shopping and add some items!</p>
+        <a routerLink="/">
+          <button class="btn btn-success">Start shopping</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+} @else {
+<h1 class="">Cart Items</h1>
+<div class="">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+    @for (item of cartItems; track $index) {
+    <div class="col">
+      <div class="card h-100">
+        <img
+          src="{{ item.product.images[0] }}"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ item.product.title }}</h5>
+          @if (item.product.discountPercentage) {
+          <strong class="card-title text-danger me-2">
+            $
+            {{
+              (
+                [item.product.price, item.product.discountPercentage]
+                | calculateDiscount
+              ).toFixed(2)
+            }}
+          </strong>
+          <del>$ {{ item.product.price }}</del>
+          } @else {
+          <strong class="card-title">$ {{ item.product.price }}</strong>
+          }
+          <p class="card-text desc">{{ item.product.description }}</p>
+          <p>Stock: {{ item.product.stock }}</p>
+          <p class="col fs-3">
+            <button class="btn btn-outline-danger me-3">
+              <i class="fa-solid fa-trash" (click)="removeFromCart(item)"></i>
+            </button>
+            <button
+              class="btn btn-outline-success fs-1"
+              (click)="counterDecrement(item)"
+            >
+              -
+            </button>
+            {{ item.quantity }}
+            <button
+              class="btn btn-outline-success fs-1"
+              (click)="counterIncrement(item)"
+            >
+              +
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  <!-- Sub total -->
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      <div class="card p-4">
+        <div class="card-body text-center">
+          <h2 class="card-title mb-3">Total</h2>
+          <p class="card-text">
+            {{ totalPrice.toFixed(2) }}
+          </p>
+          <p>including VAT</p>
+          <button class="btn btn-success">Check out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

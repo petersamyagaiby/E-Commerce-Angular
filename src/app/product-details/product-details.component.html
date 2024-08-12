@@ -53,9 +53,19 @@
     <h3>More information</h3>
     <div class="row row-cols-2 g-5">
       <p class="col fs-3">
-        <button class="btn text-success fs-1">-</button>
-        1
-        <button class="btn text-success fs-1">+</button>
+        <button
+          class="btn btn-outline-success fs-1"
+          (click)="counterDecrement()"
+        >
+          -
+        </button>
+        {{ counter }}
+        <button
+          class="btn btn-outline-success fs-1"
+          (click)="counterIncrement()"
+        >
+          +
+        </button>
       </p>
       <div class="col">
         <p>
@@ -70,6 +80,7 @@
       type="button"
       class="btn btn-success me-3"
       [disabled]="productDetails?.stock === 0"
+      (click)="buyNow(productDetails, counter)"
     >
       Buy Now
     </button>
@@ -77,10 +88,9 @@
       type="button"
       class="btn btn-outline-success"
       [disabled]="productDetails?.stock === 0"
+      (click)="addToCart(productDetails, counter)"
     >
       Add to cart
     </button>
-    <!-- <button type="button" class="btn btn-success me-3">Buy Now</button>
-    <button type="button" class="btn btn-outline-success">Add to cart</button> -->
   </div>
 </div>
