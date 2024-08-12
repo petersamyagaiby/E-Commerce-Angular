@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import productsData from '../../../public/products.json';
+// import productsData from '../../../public/products.json';
 import { ProductComponent } from '../product/product.component';
 import { CommonModule } from '@angular/common';
+import { ProductsRequestService } from '../services/products-request.service';
 
 @Component({
   selector: 'app-products-list',
@@ -11,7 +12,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './products-list.component.css',
 })
 export class ProductsListComponent {
-  productsList: Product[] = productsData;
+  productsList!: Product[];
+  constructor(private productsRequestService: ProductsRequestService) {}
+
+  ngOnInit() {
+    this.productsRequestService.getProductsList().subscribe((data: any) => {
+      this.productsList = data.products;
+    });
+  }
 }
 
 interface Review {

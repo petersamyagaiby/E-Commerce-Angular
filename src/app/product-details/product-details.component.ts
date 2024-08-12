@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import productsData from '../../../public/products.json';
+import { ActivatedRoute, Router } from '@angular/router';
+// import productsData from '../../../public/products.json';
 import { FloorPipe } from '../floor.pipe';
 import { CalculateDiscountPipe } from '../calculate-discount.pipe';
 import { StarRatingComponent } from '../star-rating/star-rating.component';
+import { ProductsRequestService } from '../services/products-request.service';
 
 @Component({
   selector: 'app-product-details',
@@ -13,17 +14,24 @@ import { StarRatingComponent } from '../star-rating/star-rating.component';
   styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent {
-  constructor(private activatedRoute: ActivatedRoute) {}
-
-  productsList: Product[] = productsData;
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private productRequestService: ProductsRequestService,
+    private router: Router
+  ) {}
 
   productDetails: any;
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
-    console.log('🚀 ~ ProductDetailsComponent ~ ngOnInit ~ id:', id);
-    this.productDetails = this.productsList.find(
-      (product) => product.id === +id
+
+    this.productRequestService.getProductsDetails(id).subscribe(
+      (product) => (this.productDetails = product),
+      (err) => {
+        if (err.status === 404) {
+          this.router.navigate(['/']);
+        }
+      }
     );
   }
 
